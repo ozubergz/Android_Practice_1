@@ -19,11 +19,17 @@ class WordViewModel(application: Application) : AndroidViewModel(application) {
         repo = WordRepository(wordDao)
     }
 
-    val words = repo.allWords.asLiveData(viewModelScope.coroutineContext)
+    val readData = repo.allWords.asLiveData(viewModelScope.coroutineContext)
 
     fun insert(word: Word) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.insert(word)
+        }
+    }
+
+    fun delete(word: Word) {
+        viewModelScope.launch {
+            repo.delete(word)
         }
     }
 }
